@@ -1,0 +1,10 @@
+pipeline{
+    agent any
+    stages{
+        state("clone"){
+            step {
+              git branch: 'main', url: 'https://github.com/17021084/hello-jenkins.git'
+            }
+        }
+    }
+}
