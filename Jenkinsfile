@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                git 'https://github.com/17021084/hello-jenkins.git'
+                git branch: 'main', url: 'https://github.com/17021084/hello-jenkins.git'
             }
         }
         stage('Install Dependencies') {
