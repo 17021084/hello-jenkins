@@ -12,6 +12,11 @@ pipeline {
                 sh 'npm install'
             }
         }
+        stage('Test app') {
+            steps {
+                sh 'npm run test-cicd'
+            }
+        }
         stage('Build App') {
             steps {
                 sh 'npm run build'
