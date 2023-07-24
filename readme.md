@@ -8,7 +8,15 @@ Thì ở trong code repo phải để là Jenkinsfile , ko thì sẽ bị lỗi 
 
 ##### React test
 
-1 Jest test
+1 Check convention code with eslint
+
+Install eslint  : https://dev.to/knowankit/setup-eslint-and-prettier-in-react-app-357b
+
+
+
+
+
+2 Jest test
 
 
 ```
@@ -16,4 +24,9 @@ in package json 　để dòng scrip này mục đich là ko có prompt khi ch�
  "test-cicd": "CI=true react-scripts test --env=jsdom",
 ```
 
+
+run test
+```
+npm run test-cicd
+```
 
