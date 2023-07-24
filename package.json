@@ -17,7 +17,8 @@
     "test": "react-scripts test",
     "test-cicd": "CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "lint-fix":"eslint src -fix"
   },
   "eslintConfig": {
     "extends": [

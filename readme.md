@@ -30,3 +30,11 @@ run test
 npm run test-cicd
 ```
 
+
+
+
+
+##### Note
+
+npm thì chạy các package  global. còn npx chị các  packages không global ( có thể chỉ trong 1 folder)
+Ví dụ chạy lint``` npm lint src``` sẽ không được mà chạy ``` npx lint src```  lại được
