@@ -9,22 +9,22 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                sh 'yarn install'
             }
         }
         stage('Check lints'){
             steps{
-                sh 'npm run lint'
+                sh 'yarn run lint'
             }
         }
         stage('Test app') {
             steps {
-                sh 'npm run test-cicd'
+                sh 'yarn run test-cicd'
             }
         }
         stage('Build App') {
             steps {
-                sh 'npm run build'
+                sh 'yarn run build'
             }
         }
     }
