@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Check lints'){
             steps{
-                sh 'npm run lint'
+                sh 'yarn run lint'
             }
         }
         stage('Test app') {
