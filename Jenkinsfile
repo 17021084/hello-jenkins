@@ -8,11 +8,11 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/17021084/hello-jenkins.git'
             }
         }
-        // stage('Install Dependencies') {
-        //     steps {
-        //         sh 'yarn install'
-        //     }
-        // }
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
         // stage('Check lints') {
         //     steps {
         //         sh 'yarn run lint'
@@ -33,6 +33,7 @@ pipeline {
                 sh 'aws s3 ls '
             }
         }
+
         // stage('Upload to s3') {
         //     steps {
         //         s3Upload consoleLogLevel: 'INFO',
