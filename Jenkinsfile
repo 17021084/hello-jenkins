@@ -2,6 +2,10 @@
 pipeline {
     agent any
     tools { nodejs 'node' }
+    environment {
+        S3_BUCKET_NAME = "trung-demo-cicd"
+    }
+
     stages {
         stage('Clone') {
             steps {
@@ -10,7 +14,8 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                sh 'yarn install'
+                // sh 'rm package-lock.json'
+                sh 'npm install'
             }
         }
         stage('Check lints') {
@@ -28,34 +33,34 @@ pipeline {
                 sh 'yarn run build'
             }
         }
-        stage('test aws') {
+        stage ("upload s3 via command"){
             steps {
-                sh 'aws s3 ls '
+                sh " aws s3 rm s3://${env.S3_BUCKET_NAME} --recursive"
+                sh " aws s3 cp --recursive ./build s3://${env.S3_BUCKET_NAME} "
             }
         }
 
-
-        stage('Upload to s3') {
-            steps {
-                s3Upload consoleLogLevel: 'INFO',
-            dontSetBuildResultOnFailure: false,
-            dontWaitForConcurrentBuildCompletion: false,
-            entries: [[
-                bucket: 'trung-demo-cicd',
-                excludedFile: '',
-                flatten: false,
-                gzipFiles: false,
-                keepForever: false,
-                managedArtifacts: false,
-                noUploadOnFailure: true,
-                selectedRegion: 'ap-northeast-1',
-                showDirectlyInBrowser: false,
-                sourceFile: 'build/*',
-                storageClass: 'STANDARD',
-                uploadFromSlave: false,
-                useServerSideEncryption: false]],
-                pluginFailureResultConstraint: 'FAILURE', profileName: 'default', userMetadata: []
-            }
-        }
+        // stage('Upload to s3') {
+        //     steps {
+        //         s3Upload consoleLogLevel: 'INFO',
+        //     dontSetBuildResultOnFailure: false,
+        //     dontWaitForConcurrentBuildCompletion: false,
+        //     entries: [[
+        //         bucket: 'trung-demo-cicd',
+        //         excludedFile: '',
+        //         flatten: false,
+        //         gzipFiles: false,
+        //         keepForever: false,
+        //         managedArtifacts: false,
+        //         noUploadOnFailure: true,
+        //         selectedRegion: 'ap-northeast-1',
+        //         showDirectlyInBrowser: false,
+        //         sourceFile: 'build/*',
+        //         storageClass: 'STANDARD',
+        //         uploadFromSlave: false,
+        //         useServerSideEncryption: false]],
+        //         pluginFailureResultConstraint: 'FAILURE', profileName: 'default', userMetadata: []
+        //     }
+        // }
     }
 }
