@@ -18,16 +18,16 @@ pipeline {
                 sh 'npm install'
             }
         }
-        // stage('Check lints') {
-        //     steps {
-        //         sh 'yarn run lint'
-        //     }
-        // }
-        // stage('Test app') {
-        //     steps {
-        //         sh 'yarn run test-cicd'
-        //     }
-        // }
+        stage('Check lints') {
+            steps {
+                sh 'yarn run lint'
+            }
+        }
+        stage('Test app') {
+            steps {
+                sh 'yarn run test-cicd'
+            }
+        }
         stage('Build App') {
             steps {
                 sh 'yarn run build'
