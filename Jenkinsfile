@@ -1,3 +1,4 @@
+/* groovylint-disable-next-line CompileStatic */
 pipeline {
     agent any
     tools { nodejs 'node' }
@@ -12,8 +13,8 @@ pipeline {
                 sh 'yarn install'
             }
         }
-        stage('Check lints'){
-            steps{
+        stage('Check lints') {
+            steps {
                 sh 'yarn run lint'
             }
         }
@@ -25,6 +26,35 @@ pipeline {
         stage('Build App') {
             steps {
                 sh 'yarn run build'
+            }
+        }
+        stage('test aws') {
+            steps {
+                sh 'aws s3 ls '
+            }
+        }
+
+
+        stage('Upload to s3') {
+            steps {
+                s3Upload consoleLogLevel: 'INFO',
+            dontSetBuildResultOnFailure: false,
+            dontWaitForConcurrentBuildCompletion: false,
+            entries: [[
+                bucket: 'trung-demo-cicd',
+                excludedFile: '',
+                flatten: false,
+                gzipFiles: false,
+                keepForever: false,
+                managedArtifacts: false,
+                noUploadOnFailure: true,
+                selectedRegion: 'ap-northeast-1',
+                showDirectlyInBrowser: false,
+                sourceFile: 'build/*',
+                storageClass: 'STANDARD',
+                uploadFromSlave: false,
+                useServerSideEncryption: false]],
+                pluginFailureResultConstraint: 'FAILURE', profileName: 'default', userMetadata: []
             }
         }
     }
