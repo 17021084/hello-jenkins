@@ -2,6 +2,10 @@
 pipeline {
     agent any
     tools { nodejs 'node' }
+    environment {
+        S3_BUCKET_NAME = "trung-demo-cicd"
+    }
+
     stages {
         stage('Clone') {
             steps {
@@ -24,14 +28,15 @@ pipeline {
         //         sh 'yarn run test-cicd'
         //     }
         // }
-        // stage('Build App') {
-        //     steps {
-        //         sh 'yarn run build'
-        //     }
-        // }
-        stage('test aws') {
+        stage('Build App') {
             steps {
-                sh 'aws s3 ls '
+                sh 'yarn run build'
+            }
+        }
+        stage ("upload s3 via command"){
+            steps {
+                sh " aws s3 rm s3://${env.S3_BUCKET_NAME} --recursive"
+                sh " aws s3 cp --recursive ./build s3://${env.S3_BUCKET_NAME} "
             }
         }
 
